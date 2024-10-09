@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class zad2 {
+public class Zad2 {
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Podaj Liczbę by sprawdzić czy jest liczbą armstronga");

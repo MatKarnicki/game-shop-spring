@@ -1,5 +1,5 @@
-package zad5;
-public class zad5{
+package Zad5;
+public class Zad5{
         public static void main(String[] args){
         Author author = new Author("Test Test", "Test@Test.Test", Gender.NONBINARY);
 

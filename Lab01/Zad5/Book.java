@@ -1,4 +1,4 @@
-package zad5;
+package Zad5;
 public class Book {
     public Author author;
     public String name;

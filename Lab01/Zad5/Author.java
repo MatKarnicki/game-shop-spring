@@ -1,7 +1,4 @@
-package zad5;
-enum Gender {
-    MALE, FEMALE, NONBINARY, OTHER
-}
+package Zad5;
 
 public class Author {
     public String name;
