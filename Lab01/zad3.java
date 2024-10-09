@@ -10,7 +10,7 @@ public class zad3 {
         double seconds = myReader.nextInt();
         myReader.nextLine();
         myReader.close();
-        System.out.println(Planet.calculateAge(seconds, Planet.values()[answer-1]));
+        System.out.println(Planet.values()[answer-1].calculateAge(seconds));
     }
 
     public static void menu() {

@@ -17,9 +17,9 @@ public enum Planet {
         return this.earthYears;
     }
 
-     public static double calculateAge(double seconds, Planet planet){
+     public double calculateAge(double seconds){
         double age = seconds / 31557600;
-        return age * planet.getValue();
+        return age * this.getValue();
     }
 }
 
