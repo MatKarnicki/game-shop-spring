@@ -53,3 +53,7 @@ public class zad4 {
         scanner.close();
     }
 }
+
+//zrobic stringi a nie printy
+//mnozenie stringow z repeat
+//String builder
