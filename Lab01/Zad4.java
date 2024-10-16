@@ -14,7 +14,9 @@
                 System.out.println("Liczba musi być większa od 0.");
             }
         } while (numberOfRows <= 0);
-        System.out.println(createPatterns(numberOfRows));
+        String expected = "X\nXX\nXX\nX\nXX\n X\n X\nXX\n";
+        String actual = createPatterns(numberOfRows);
+        System.out.println(expected.equals(actual));
         myScanner.close();
    }
 
@@ -24,26 +26,80 @@
         StringBuilder result = new StringBuilder();
 
         for (int i = 1; i <= numberOfRows; i++) {
-            result.append("X".repeat(i)).append("\n");
+            for (int j = 1; j <= i; j++ ){
+                result.append("X");
+            }
+            result.append("\n");
         }
 
         for (int i = numberOfRows; i > 0; i--) {
-            result.append("X".repeat(i)).append("\n");
+            for (int j = 1; j <= i; j++ ){
+                result.append("X");
+            }
+            result.append("\n");
         }
 
         for (int i = 1; i <= numberOfRows; i++) {
-            result.append(" ".repeat(i - 1))
-                  .append("X".repeat(numberOfRows - i + 1))
-                  .append("\n");
+            for (int j = 1; j < i; j++){
+                 result.append(" ");
+            }
+            for (int j = 1; j <= numberOfRows - i + 1; j++ ){
+                result.append("X");
+            }
+                result.append("\n");
         }
 
         for (int i = numberOfRows; i > 0; i--) {
-            result.append(" ".repeat(i - 1))
-                  .append("X".repeat(numberOfRows - i + 1))
-                  .append("\n");
+             for (int j = 1; j < i; j++){
+                 result.append(" ");
+            }
+            for (int j = 1; j <= numberOfRows - i + 1; j++ ){
+                result.append("X");
+            }
+                result.append("\n");
         }
         return result.toString();
 
     }
+    
+    public static String createPatterns(int numberOfRows, String patternSymbol) {
+        
+        StringBuilder result = new StringBuilder();
+        
+        for (int i = 1; i <= numberOfRows; i++) {
+            for (int j = 1; j <= i; j++ ){
+                result.append(patternSymbol);
+            }
+            result.append("\n");
+        }
+        
+        for (int i = numberOfRows; i > 0; i--) {
+            for (int j = 1; j <= i; j++ ){
+                result.append(patternSymbol);
+            }
+            result.append("\n");
+        }
+        
+        for (int i = 1; i <= numberOfRows; i++) {
+            for (int j = 1; j < i; j++){
+                result.append(" ");
+            }
+            for (int j = 1; j <= numberOfRows - i + 1; j++ ){
+                result.append(patternSymbol);
+            }
+            result.append("\n");
+        }
+        
+        for (int i = numberOfRows; i > 0; i--) {
+            for (int j = 1; j < i; j++){
+                result.append(" ");
+            }
+            for (int j = 1; j <= numberOfRows - i + 1; j++ ){
+                result.append(patternSymbol);
+            }
+            result.append("\n");
+        }
+        return result.toString();
+        
+    }
 }
-
