@@ -7,6 +7,7 @@ public class Zad2 {
         String answer = myScanner.nextLine();
         System.out.println(armstrongNumber(Integer.valueOf(answer)));
         myScanner.close();
+        
     }
     public static boolean armstrongNumber(int number){
         int lenghtOfNumber = Integer.toString(number).length();
@@ -19,5 +20,5 @@ public class Zad2 {
         }
         return sum == number; 
     }
-
+    
 }

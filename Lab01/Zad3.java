@@ -25,8 +25,5 @@ public class Zad3 {
         System.out.println("8. Neptun");
     
     }
-    public static void menuError(){
-        System.out.println("Wybrano złą opcje");
-    }
    
 }

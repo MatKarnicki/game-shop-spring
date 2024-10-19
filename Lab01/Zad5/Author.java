@@ -1,5 +1,3 @@
-package Zad5;
-
 public class Author {
     public String name;
     public String email;
