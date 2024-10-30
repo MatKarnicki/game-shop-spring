@@ -1,4 +1,4 @@
-package domain;
+package lab3.zad1.domain;
 
 public class Person {
     private String id;

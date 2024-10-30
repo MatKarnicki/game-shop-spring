@@ -1,21 +1,25 @@
+
+
 package lab3.zad2.service;
 
 import lab3.zad2.domain.Person;
 
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.HashMap;
 import com.opencsv.CSVReader;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PersonService {
-    private Map<String, Person> personMap = new HashMap<>();
 
-    public Map<String, Person> loadFromCSV(String fileName) {
+    public static Map<String, Person> loadFromCSV(String fileName) {
+        Map<String, Person> personMap = new HashMap<>();
         try {
-            FileReader fileReader = new FileReader(fileName);
-            CSVReader csvReader = new CSVReader(fileReader);
+
+            CSVReader csvReader = new CSVReader(new InputStreamReader(new ClassPathResource(fileName).getInputStream()));
             String[] nextRecord;
 
             while ((nextRecord = csvReader.readNext()) != null) {
@@ -36,7 +40,4 @@ public class PersonService {
         return personMap;
     }
 
-    public Map<String, Person> getPersonMap() {
-        return personMap;
-    }
 }
