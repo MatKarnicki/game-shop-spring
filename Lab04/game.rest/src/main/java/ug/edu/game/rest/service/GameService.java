@@ -45,11 +45,8 @@ public class GameService {
     }
 
     public void initializeDatabase() {
-        Game game1 = new Game("Bloodborne", "Action", 2015);
-        Game game2 = new Game("Monster Hunter World", "RPG", 2018);
-        Game game3 = new Game("Final Fantasy XVI", "RPG", 2023);
-        gameDatabase.put(game1.getId(), game1);
-        gameDatabase.put(game2.getId(), game2);
-        gameDatabase.put(game3.getId(), game3);
+        gameDatabase.put("1",new Game("1","Bloodborne", "Action", 2015));
+        gameDatabase.put("2", new Game("2","Monster Hunter World", "RPG", 2018));
+        gameDatabase.put("3", new Game("3","Final Fantasy XVI", "RPG", 2023));
     }
 }

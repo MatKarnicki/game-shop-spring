@@ -14,6 +14,13 @@ public class Game {
         this.releaseYear = releaseYear;
     }
 
+    public Game(String id, String title, String genre, int releaseYear){
+        this.id = id;
+        this.title = title;
+        this.genre = genre;
+        this.releaseYear = releaseYear;
+    }
+
     public String getId() {
         return id;
     }
