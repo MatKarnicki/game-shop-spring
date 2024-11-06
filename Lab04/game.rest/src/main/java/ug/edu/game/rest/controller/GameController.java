@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ug.edu.game.rest.model.Game;
 import ug.edu.game.rest.service.GameService;
 import ug.edu.game.rest.exception.GameNotFoundException;
@@ -37,7 +38,7 @@ public class GameController {
     @PostMapping
     public ResponseEntity<Game> addGame(@RequestBody Game game) {
         Game createdGame = gameService.addGame(game);
-        URI location = URI.create("/api/games/" + createdGame.getId());
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").build(createdGame.getId());
         return ResponseEntity.created(location).body(createdGame);
     }
 
@@ -55,7 +56,7 @@ public class GameController {
     public ResponseEntity<String> deleteGame(@PathVariable String id) {
         try {
             gameService.deleteGame(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Deleted game with id:" + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted game with ID " + id);
         } catch (GameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
