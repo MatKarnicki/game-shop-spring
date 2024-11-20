@@ -1,26 +1,34 @@
 package ug.edu.game.rest.model;
-import java.util.Calendar;
-import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
+
+import java.time.LocalDate;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Game {
     private final String id;
+    @NonNull
     private String title;
+    @NonNull
     private String genre;
+    @NonNull
     private int sales;
     private boolean released;
-    private Date releaseYear;
 
-    public Game(String title, String genre, Date releaseYear, int sales) {
+    @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate releaseDate;
+
+    public Game(String title, String genre, LocalDate releaseDate, int sales) {
         this.id = UUID.randomUUID().toString();
         setTitle(title);
         setGenre(genre);
-        setReleaseYear(releaseYear);
+        setReleaseDate(releaseDate);
         setSales(sales);
-        this.released = releaseYear.before(new Date());
+        this.released = releaseDate.isBefore(LocalDate.now());
     }
-
 
     public String getId() {
         return id;
@@ -37,35 +45,32 @@ public class Game {
     public int getSales() {
         return sales;
     }
-    public Date getReleaseYear() {
-        return releaseYear;
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 
     public boolean isReleased() {
         return released;
     }
+
     public void setTitle(String title) {
-        if (title == null || !Pattern.matches("^[A-Z]", title)) {
+        if (title == null || !Pattern.matches("^[A-Z0-9].*", title)) {
+            System.out.println("title: " + title);
             throw new IllegalArgumentException("Title must begin with a big letter.");
         }
         this.title = title;
     }
 
     public void setGenre(String genre) {
-        if (genre == null || genre.isEmpty()) {
-            throw new IllegalArgumentException("Genre cannot be null or empty.");
-        }
         this.genre = genre;
     }
 
-    public void setReleaseYear(Date releaseYear) {
-        if (releaseYear == null) {
-            throw new IllegalArgumentException("Release year cannot be null.");
-        }
-        if (releaseYear.before(new Date(1958, Calendar.NOVEMBER,1))) {
+    public void setReleaseDate(LocalDate releaseDate) {
+        if (releaseDate.isBefore(LocalDate.of(1958, 11, 1))) {
             throw new IllegalArgumentException("Can't set the date before the first game ever made.");
         }
-        this.releaseYear = releaseYear;
+        this.releaseDate = releaseDate;
     }
 
     public void setSales(int sales) {
@@ -79,8 +84,7 @@ public class Game {
         this.released = isReleased;
     }
 
-
-    public String toString(){
-        return "Game [id=" + id + ", title=" + title + ", genre=" + genre + ", releaseYear=" + releaseYear + ", sales=" + sales + ", released=" + released + "]";
+    public String toString() {
+        return "Game [id=" + id + ", title=" + title + ", genre=" + genre + ", releaseDate=" + releaseDate + ", sales=" + sales + ", released=" + released + "]";
     }
 }
