@@ -1,5 +1,6 @@
 package ug.edu.game.rest.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,14 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<Game> addGame(@RequestBody Game game) {
+    public ResponseEntity<Game> addGame(@Valid @RequestBody Game game) {
         Game createdGame = gameService.addGame(game);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").build(createdGame.getId());
         return ResponseEntity.created(location).body(createdGame);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateGame(@PathVariable String id, @RequestBody Game updatedGame) {
+    public ResponseEntity<?> updateGame(@PathVariable String id, @Valid @RequestBody Game updatedGame) {
         try {
             Game game = gameService.updateGame(id, updatedGame);
             return ResponseEntity.ok(game);

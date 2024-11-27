@@ -1,33 +1,40 @@
 package ug.edu.game.rest.model;
 
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
+import ug.edu.game.rest.validation.DateAfter;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 public class Game {
+
     private final String id;
-    @NonNull
+
+    @NotBlank(message = "Title cannot be empty or null.")
+    @Pattern(regexp = "^[A-Z0-9].*", message = "Title must begin with a capital letter or a number.")
     private String title;
-    @NonNull
+
+    @NotBlank(message = "Genre cannot be empty or null.")
     private String genre;
-    @NonNull
+
+    @PositiveOrZero(message = "Sales must be a non-negative number.")
     private int sales;
+
     private boolean released;
 
-    @NonNull
+    @NotNull(message = "Release date is required.")
+    @DateAfter("1958-10-01")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     public Game(String title, String genre, LocalDate releaseDate, int sales) {
         this.id = UUID.randomUUID().toString();
-        setTitle(title);
-        setGenre(genre);
-        setReleaseDate(releaseDate);
-        setSales(sales);
-        this.released = releaseDate.isBefore(LocalDate.now());
+        this.title = title;
+        this.genre = genre;
+        this.releaseDate = releaseDate;
+        this.sales = sales;
+        this.released = releaseDate.isBefore(LocalDate.now().plusDays(1));
     }
 
     public String getId() {
@@ -55,10 +62,6 @@ public class Game {
     }
 
     public void setTitle(String title) {
-        if (title == null || !Pattern.matches("^[A-Z0-9].*", title)) {
-            System.out.println("title: " + title);
-            throw new IllegalArgumentException("Title must begin with a big letter.");
-        }
         this.title = title;
     }
 
@@ -67,16 +70,10 @@ public class Game {
     }
 
     public void setReleaseDate(LocalDate releaseDate) {
-        if (releaseDate.isBefore(LocalDate.of(1958, 11, 1))) {
-            throw new IllegalArgumentException("Can't set the date before the first game ever made.");
-        }
         this.releaseDate = releaseDate;
     }
 
     public void setSales(int sales) {
-        if (sales < 0) {
-            throw new IllegalArgumentException("Sales must be a non-negative number.");
-        }
         this.sales = sales;
     }
 
@@ -84,7 +81,10 @@ public class Game {
         this.released = isReleased;
     }
 
+    @Override
     public String toString() {
-        return "Game [id=" + id + ", title=" + title + ", genre=" + genre + ", releaseDate=" + releaseDate + ", sales=" + sales + ", released=" + released + "]";
+        return "Game [id=" + id + ", title=" + title + ", genre=" + genre +
+                ", releaseDate=" + releaseDate + ", sales=" + sales +
+                ", released=" + released + "]";
     }
 }

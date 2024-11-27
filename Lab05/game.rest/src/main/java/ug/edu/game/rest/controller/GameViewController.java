@@ -1,15 +1,16 @@
 package ug.edu.game.rest.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ug.edu.game.rest.model.Game;
 import ug.edu.game.rest.service.GameService;
 import ug.edu.game.rest.exception.GameNotFoundException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -37,7 +38,10 @@ public class GameViewController {
     }
 
     @PostMapping("/add")
-    public String addGame(@ModelAttribute Game game) {
+    public String addGame(@Valid @ModelAttribute Game game, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "games/add";
+        }
         gameService.addGame(game);
         return "redirect:/games";
     }
@@ -49,16 +53,22 @@ public class GameViewController {
             model.addAttribute("game", game);
             return "games/edit";
         } catch (GameNotFoundException e) {
+            model.addAttribute("error", "Game not found.");
             return "redirect:/games";
         }
     }
 
     @PostMapping("/edit/{id}")
-    public String updateGame(@PathVariable String id, @ModelAttribute Game updatedGame) {
+    public String updateGame(@PathVariable String id, @Valid @ModelAttribute Game updatedGame, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("game", updatedGame);
+            return "games/edit";
+        }
         try {
             gameService.updateGame(id, updatedGame);
             return "redirect:/games";
         } catch (GameNotFoundException e) {
+            model.addAttribute("error", "Game not found.");
             return "redirect:/games";
         }
     }
