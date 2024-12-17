@@ -15,13 +15,13 @@ public class GameShop {
     @NotBlank(message = "Shop name cannot be empty.")
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "game_shop_games",
-            joinColumns = @JoinColumn(name = "shop_id"),
-            inverseJoinColumns = @JoinColumn(name = "game_id")
-    )
-    private List<Game> games = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "game_shop_games",
+//            joinColumns = @JoinColumn(name = "shop_id"),
+//            inverseJoinColumns = @JoinColumn(name = "game_id")
+//    )
+//    private List<Game> games = new ArrayList<>();
 
     public GameShop() {}
 
@@ -37,17 +37,17 @@ public class GameShop {
         return name;
     }
 
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void addGame(Game game) {
-        games.add(game);
-        game.getShops().add(this);
-    }
-
-    public void removeGame(Game game) {
-        games.remove(game);
-        game.getShops().remove(this);
-    }
+//    public List<Game> getGames() {
+//        return games;
+//    }
+//
+//    public void addGame(Game game) {
+//        games.add(game);
+//        game.getShops().add(this);
+//    }
+//
+//    public void removeGame(Game game) {
+//        games.remove(game);
+//        game.getShops().remove(this);
+//    }
 }

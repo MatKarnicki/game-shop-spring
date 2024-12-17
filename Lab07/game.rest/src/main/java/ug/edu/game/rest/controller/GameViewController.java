@@ -12,6 +12,7 @@ import ug.edu.game.rest.exception.GameNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/games")
@@ -47,7 +48,7 @@ public class GameViewController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
+    public String showEditForm(@PathVariable UUID id, Model model) {
         try {
             Game game = gameService.getGameById(id);
             model.addAttribute("game", game);
@@ -59,7 +60,7 @@ public class GameViewController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateGame(@PathVariable String id, @Valid @ModelAttribute Game updatedGame, BindingResult result, Model model) {
+    public String updateGame(@PathVariable UUID id, @Valid @ModelAttribute Game updatedGame, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("game", updatedGame);
             return "games/edit";
@@ -74,7 +75,7 @@ public class GameViewController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteGame(@PathVariable String id) {
+    public String deleteGame(@PathVariable UUID id) {
         try {
             gameService.deleteGame(id);
         } catch (GameNotFoundException e) {

@@ -11,6 +11,7 @@ import ug.edu.game.rest.service.GameService;
 import ug.edu.game.rest.exception.GameNotFoundException;
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/games")
@@ -27,7 +28,7 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getGameById(@PathVariable String id) {
+    public ResponseEntity<?> getGameById(@PathVariable UUID id) {
         try {
             Game game = gameService.getGameById(id);
             return ResponseEntity.ok(game);
@@ -44,7 +45,7 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateGame(@PathVariable String id, @Valid @RequestBody Game updatedGame) {
+    public ResponseEntity<?> updateGame(@PathVariable UUID id, @Valid @RequestBody Game updatedGame) {
         try {
             Game game = gameService.updateGame(id, updatedGame);
             return ResponseEntity.ok(game);
@@ -54,7 +55,7 @@ public class GameController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteGame(@PathVariable String id) {
+    public ResponseEntity<String> deleteGame(@PathVariable UUID id) {
         try {
             gameService.deleteGame(id);
             return ResponseEntity.status(HttpStatus.OK).body("Deleted game with ID " + id);

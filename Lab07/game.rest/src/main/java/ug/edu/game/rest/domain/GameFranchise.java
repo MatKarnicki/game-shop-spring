@@ -16,8 +16,8 @@ public class GameFranchise {
     @NotBlank(message = "Franchise name cannot be empty.")
     private String name;
 
-    @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Game> games = new ArrayList<>();
+//    @OneToMany(mappedBy = "franchise")
+//    private List<Game> games = new ArrayList<>();
 
     public GameFranchise() {}
 
@@ -30,20 +30,19 @@ public class GameFranchise {
     }
 
     public String getName() {
-        return name;
-    }
+        return name;}
 
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void addGame(Game game) {
-        games.add(game);
-        game.setFranchise(this);
-    }
-
-    public void removeGame(Game game) {
-        games.remove(game);
-        game.setFranchise(null);
-    }
+//    public List<Game> getGames() {
+//        return games;
+//    }
+//
+//    public void addGame(Game game) {
+//        games.add(game);
+//        game.setFranchise(this);
+//    }
+//
+//    public void removeGame(Game game) {
+//        games.remove(game);
+//        game.setFranchise(null);
+//    }
 }
