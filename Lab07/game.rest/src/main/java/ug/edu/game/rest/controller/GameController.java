@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ug.edu.game.rest.domain.Game;
+import ug.edu.game.rest.domain.GameDetails;
+import ug.edu.game.rest.exception.GameDetailsNotFoundException;
 import ug.edu.game.rest.service.GameService;
 import ug.edu.game.rest.exception.GameNotFoundException;
 import java.net.URI;
@@ -60,6 +62,41 @@ public class GameController {
             gameService.deleteGame(id);
             return ResponseEntity.status(HttpStatus.OK).body("Deleted game with ID " + id);
         } catch (GameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    // Add Game Details to a Game
+    @PostMapping("/{gameId}/details")
+    public ResponseEntity<GameDetails> addGameDetails(@PathVariable UUID gameId, @Valid @RequestBody GameDetails gameDetails) {
+        try {
+            GameDetails createdDetails = gameService.addGameDetails(gameId, gameDetails);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").build(createdDetails.getId());
+            return ResponseEntity.created(location).body(createdDetails);
+        } catch (GameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    // Update Game Details
+    @PutMapping("/{gameId}/details/{detailsId}")
+    public ResponseEntity<?> updateGameDetails(@PathVariable UUID gameId, @PathVariable String detailsId,
+                                               @Valid @RequestBody GameDetails updatedDetails) {
+        try {
+            GameDetails details = gameService.updateGameDetails(gameId, detailsId, updatedDetails);
+            return ResponseEntity.ok(details);
+        } catch (GameNotFoundException | GameDetailsNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    // Remove Game Details
+    @DeleteMapping("/{gameId}/details/{detailsId}")
+    public ResponseEntity<String> removeGameDetails(@PathVariable UUID gameId, @PathVariable String detailsId) {
+        try {
+            gameService.deleteGameDetails(gameId, detailsId);
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted game details with ID " + detailsId);
+        } catch (GameNotFoundException | GameDetailsNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

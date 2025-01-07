@@ -1,5 +1,6 @@
 package ug.edu.game.rest.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,27 +16,27 @@ public class Game {
      @GeneratedValue(strategy = GenerationType.AUTO)
      private final UUID id;
 
-//     @OneToOne
-//     private GameDetails gameDetails;
-//
-//     @ManyToOne
-//     @JoinColumn(name = "game_franchise_id")
-//     private GameFranchise franchise;
-//
-//     public GameFranchise getFranchise() {
-//         return franchise;
-//     }
-//
-//     public void setFranchise(GameFranchise franchise) {
-//         this.franchise = franchise;
-//     }
-//
-//     @ManyToMany(mappedBy = "games")
-//     private List<GameShop> shops = new ArrayList<>();
-//
-//     public List<GameShop> getShops() {
-//         return shops;
-//     }
+     @OneToOne(cascade = CascadeType.ALL)
+     private GameDetails gameDetails;
+
+     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+     @JoinColumn(name = "game_franchise_id")
+     private GameFranchise franchise;
+
+     public GameFranchise getFranchise() {
+         return franchise;
+     }
+
+     public void setFranchise(GameFranchise franchise) {
+         this.franchise = franchise;
+     }
+
+     @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
+     private List<GameShop> shops = new ArrayList<>();
+
+     public List<GameShop> getShops() {
+         return shops;
+     }
 
      @NotBlank(message = "Title cannot be empty or null.")
      @Pattern(regexp = "^[A-Z0-9].*", message = "Title must begin with a capital letter or a number.")
@@ -110,9 +111,17 @@ public class Game {
         this.released = isReleased;
     }
 
-//     public void setShops(List<GameShop> shops) {
-//         this.shops = shops;
-//     }
+     public void setGameDetails(GameDetails gameDetails) {
+         this.gameDetails = gameDetails;
+     }
+
+     public GameDetails getGameDetails() {
+         return gameDetails;
+     }
+
+     public void setShops(List<GameShop> shops) {
+         this.shops = shops;
+     }
 
      @Override
     public String toString() {

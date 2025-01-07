@@ -3,13 +3,14 @@ package ug.edu.game.rest.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 public class GameDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private UUID id;
 
     @NotBlank(message = "Developer name cannot be empty.")
     private String developer;
@@ -41,7 +42,7 @@ public class GameDetails {
         this.countryPublisher = countryPublisher;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
