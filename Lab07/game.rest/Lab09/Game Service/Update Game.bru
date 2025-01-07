@@ -1,0 +1,21 @@
+meta {
+  name: Update Game
+  type: http
+  seq: 7
+}
+
+put {
+  url: http://localhost:8080/api/games/907842d9-e722-4e6e-acf8-02e826a9314a
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Elden Ring",
+    "genre": "RPG",
+    "releaseDate": "2022-02-25",
+    "sales": 21370000,
+    "released": true
+  }
+}
