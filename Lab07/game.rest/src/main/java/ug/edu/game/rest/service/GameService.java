@@ -47,8 +47,8 @@ public class GameService {
         existingGame.setTitle(Optional.ofNullable(updatedGame.getTitle()).orElse(existingGame.getTitle()));
         existingGame.setGenre(Optional.ofNullable(updatedGame.getGenre()).orElse(existingGame.getGenre()));
         existingGame.setReleaseDate(Optional.ofNullable(updatedGame.getReleaseDate()).orElse(existingGame.getReleaseDate()));
-        existingGame.setSales(updatedGame.getSales());
-        existingGame.setReleased(updatedGame.isReleased());
+        existingGame.setSales(Optional.ofNullable(updatedGame.getSales()).orElse(updatedGame.getSales()));
+        existingGame.setIsReleased(existingGame.getReleaseDate().isBefore(LocalDate.now().plusDays(1)));
 
         return gameRepository.save(existingGame);
     }
