@@ -44,10 +44,10 @@ public class GameService {
     public Game updateGame(UUID id, Game updatedGame) {
         Game existingGame = gameRepository.findById(id)
                 .orElseThrow(() -> new GameNotFoundException("Game with ID " + id + " not found"));
-        existingGame.setTitle(Optional.ofNullable(updatedGame.getTitle()).orElse(existingGame.getTitle()));
-        existingGame.setGenre(Optional.ofNullable(updatedGame.getGenre()).orElse(existingGame.getGenre()));
-        existingGame.setReleaseDate(Optional.ofNullable(updatedGame.getReleaseDate()).orElse(existingGame.getReleaseDate()));
-        existingGame.setSales(Optional.ofNullable(updatedGame.getSales()).orElse(updatedGame.getSales()));
+        existingGame.setTitle(Optional.of(updatedGame.getTitle()).orElse(existingGame.getTitle()));
+        existingGame.setGenre(Optional.of(updatedGame.getGenre()).orElse(existingGame.getGenre()));
+        existingGame.setReleaseDate(Optional.of(updatedGame.getReleaseDate()).orElse(existingGame.getReleaseDate()));
+        existingGame.setSales(Optional.of(updatedGame.getSales()).orElse(updatedGame.getSales()));
         existingGame.setIsReleased(existingGame.getReleaseDate().isBefore(LocalDate.now().plusDays(1)));
 
         return gameRepository.save(existingGame);
@@ -92,13 +92,13 @@ public class GameService {
         if (existingDetails == null || !existingDetails.getId().equals(UUID.fromString(detailsId))) {
             throw new GameDetailsNotFoundException("GameDetails with ID " + detailsId + " not found for game ID " + gameId);
         }
-        existingDetails.setDeveloper(Optional.ofNullable(updatedDetails.getDeveloper()).orElse(existingDetails.getDeveloper()));
-        existingDetails.setPublisher(Optional.ofNullable(updatedDetails.getPublisher()).orElse(existingDetails.getPublisher()));
-        existingDetails.setDescription(Optional.ofNullable(updatedDetails.getDescription()).orElse(existingDetails.getDescription()));
-        existingDetails.setDeveloperFounded(Optional.ofNullable(updatedDetails.getDeveloperFounded()).orElse(existingDetails.getDeveloperFounded()));
-        existingDetails.setPublisherFounded(Optional.ofNullable(updatedDetails.getPublisherFounded()).orElse(existingDetails.getPublisherFounded()));
-        existingDetails.setCountryDeveloper(Optional.ofNullable(updatedDetails.getCountryDeveloper()).orElse(existingDetails.getCountryDeveloper()));
-        existingDetails.setCountryPublisher(Optional.ofNullable(updatedDetails.getCountryPublisher()).orElse(existingDetails.getCountryPublisher()));
+        existingDetails.setDeveloper(Optional.of(updatedDetails.getDeveloper()).orElse(existingDetails.getDeveloper()));
+        existingDetails.setPublisher(Optional.of(updatedDetails.getPublisher()).orElse(existingDetails.getPublisher()));
+        existingDetails.setDescription(Optional.of(updatedDetails.getDescription()).orElse(existingDetails.getDescription()));
+        existingDetails.setDeveloperFounded(Optional.of(updatedDetails.getDeveloperFounded()).orElse(existingDetails.getDeveloperFounded()));
+        existingDetails.setPublisherFounded(Optional.of(updatedDetails.getPublisherFounded()).orElse(existingDetails.getPublisherFounded()));
+        existingDetails.setCountryDeveloper(Optional.of(updatedDetails.getCountryDeveloper()).orElse(existingDetails.getCountryDeveloper()));
+        existingDetails.setCountryPublisher(Optional.of(updatedDetails.getCountryPublisher()).orElse(existingDetails.getCountryPublisher()));
 
         gameRepository.save(game);
         return existingDetails;

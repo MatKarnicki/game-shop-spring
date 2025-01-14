@@ -6,27 +6,38 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class GameShop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @NonNull
     @NotBlank(message = "Shop name cannot be empty.")
     private String name;
 
+    @NonNull
     @NotBlank(message = "Address cannot be empty.")
     private String address;
 
+    @NonNull
     @Pattern(regexp = "^\\+?[0-9\\-\\s]+$", message = "Phone number is not valid.")
     private String phoneNumber;
 
+    @NonNull
     @PastOrPresent(message = "Established date must be in the past or present.")
     private LocalDate establishedDate;
 
@@ -38,62 +49,4 @@ public class GameShop {
     )
     private List<Game> games = new ArrayList<>();
 
-    public GameShop() {}
-
-    public GameShop(String name, String address, String phoneNumber, LocalDate establishedDate) {
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.establishedDate = establishedDate;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public LocalDate getEstablishedDate() {
-        return establishedDate;
-    }
-
-    public void setEstablishedDate(LocalDate establishedDate) {
-        this.establishedDate = establishedDate;
-    }
-
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void addGame(Game game) {
-        games.add(game);
-        game.getShops().add(this);
-    }
-
-    public void removeGame(Game game) {
-        games.remove(game);
-        game.getShops().remove(this);
-    }
 }
