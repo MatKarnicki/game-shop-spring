@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.Game;
 import ug.edu.game.rest.domain.GameDetails;
-import ug.edu.game.rest.repository.GameRepository;
-import ug.edu.game.rest.exception.GameNotFoundException;
 import ug.edu.game.rest.exception.GameDetailsNotFoundException;
+import ug.edu.game.rest.exception.GameNotFoundException;
+import ug.edu.game.rest.repository.GameRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +31,7 @@ public class GameService {
     @Transactional(readOnly = true)
     public Game getGameById(UUID id) {
         return gameRepository.findById(id)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + id + " not found"));
+                .orElseThrow(() -> new GameNotFoundException());
     }
 
     @Transactional
@@ -41,8 +41,8 @@ public class GameService {
 
     @Transactional
     public Game updateGame(UUID id, Game updatedGame) {
-            Game existingGame = gameRepository.findById(id)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + id + " not found"));
+        Game existingGame = gameRepository.findById(id)
+                .orElseThrow(() -> new GameNotFoundException());
         updatedGame.setId(existingGame.getId());
         updatedGame.setIsReleased(updatedGame.getReleaseDate().isBefore(LocalDate.now().plusDays(1)));
 
@@ -52,25 +52,33 @@ public class GameService {
     @Transactional
     public void deleteGame(UUID id) {
         Game existingGame = gameRepository.findById(id)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + id + " not found"));
+                .orElseThrow(() -> new GameNotFoundException());
         gameRepository.delete(existingGame);
     }
 
     @Transactional
     public void initializeDatabase() {
-        Game game1 = new Game("Bloodborne", "Action", LocalDate.of(2015, 10, 11), 10000000);
-        Game game2 = new Game("Monster Hunter World", "RPG", LocalDate.of(2018, 2, 15), 15000000);
-        Game game3 = new Game("Final Fantasy XVI", "RPG", LocalDate.of(2023, 6, 3), 3000000);
-
-        gameRepository.save(game1);
-        gameRepository.save(game2);
-        gameRepository.save(game3);
+        gameRepository.save(new Game("Bloodborne", "Souls-like", LocalDate.of(2015, 10, 11), 10000000));
+        gameRepository.save(new Game("Monster Hunter World", "RPG", LocalDate.of(2018, 2, 15), 15000000));
+        gameRepository.save(new Game("Final Fantasy XVI", "RPG", LocalDate.of(2023, 6, 3), 3000000));
+        gameRepository.save(new Game("Wiedźmin 3: Dziki Gon", "RPG", LocalDate.of(2015, 5, 19), 50000000));
+        gameRepository.save(new Game("Wiedźmin 2: Zabójca Królów", "RPG", LocalDate.of(2011, 5, 17), 2000000));
+        gameRepository.save(new Game("Devil May Cry 5", "Character-Action", LocalDate.of(2019, 3, 8), 6000000));
+        gameRepository.save(new Game("Devil May Cry 4", "Character-Action", LocalDate.of(2008, 1, 31), 3000000));
+        gameRepository.save(new Game("Dark Souls III", "Souls-like", LocalDate.of(2016, 4, 12), 10000000));
+        gameRepository.save(new Game("Dark Souls II", "Souls-like", LocalDate.of(2014, 3, 11), 2500000));
+        gameRepository.save(new Game("Final Fantasy XV", "RPG", LocalDate.of(2016, 11, 29), 10000000));
+        gameRepository.save(new Game("Rocket League", "Sports", LocalDate.of(2015, 7, 7), 10000000));
+        gameRepository.save(new Game("Stardew Valley", "Simulation", LocalDate.of(2016, 2, 26), 20000000));
+        gameRepository.save(new Game("Animal Crossing: New Horizons", "Simulation", LocalDate.of(2020, 3, 20), 42000000));
+        gameRepository.save(new Game("Overwatch", "Shooter", LocalDate.of(2016, 5, 24), 50000000));
     }
+
 
     @Transactional
     public GameDetails addGameDetails(UUID gameId, GameDetails gameDetails) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + gameId + " not found"));
+                .orElseThrow(() -> new GameNotFoundException());
 
         game.setGameDetails(gameDetails);
         gameRepository.save(game);
@@ -80,11 +88,11 @@ public class GameService {
     @Transactional
     public GameDetails updateGameDetails(UUID gameId, String detailsId, GameDetails updatedDetails) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + gameId + " not found"));
+                .orElseThrow(() -> new GameNotFoundException());
 
         GameDetails existingDetails = game.getGameDetails();
         if (existingDetails == null || !existingDetails.getId().equals(UUID.fromString(detailsId))) {
-            throw new GameDetailsNotFoundException("GameDetails with ID " + detailsId + " not found for game ID " + gameId);
+            throw new GameDetailsNotFoundException();
         }
         updatedDetails.setId(existingDetails.getId());
         game.setGameDetails(updatedDetails);
@@ -95,11 +103,11 @@ public class GameService {
     @Transactional
     public void deleteGameDetails(UUID gameId, String detailsId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new GameNotFoundException("Game with ID " + gameId + " not found"));
+                .orElseThrow(() -> new GameNotFoundException());
 
         GameDetails existingDetails = game.getGameDetails();
         if (existingDetails == null || !existingDetails.getId().equals(UUID.fromString(detailsId))) {
-            throw new GameDetailsNotFoundException("GameDetails with ID " + detailsId + " not found for game ID " + gameId);
+            throw new GameDetailsNotFoundException();
         }
 
         game.setGameDetails(null);

@@ -1,7 +1,11 @@
 package ug.edu.game.rest.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class GameDetailsNotFoundException extends RuntimeException {
-    public GameDetailsNotFoundException(String message) {
-        super(message);
+    public GameDetailsNotFoundException() {
+        super("Game detail with given ID not found");
     }
 }
