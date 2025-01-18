@@ -40,7 +40,7 @@ public class GameDetails {
     private String countryPublisher;
 
     @NonNull
-    @Column(length = 1024, columnDefinition = "TEXT")
+    @Size(min = 3,max = 255, message = "Title must contain at least 3 characters and at most 255 characters")
     private String description;
 
 
