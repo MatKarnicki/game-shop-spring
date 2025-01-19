@@ -1,0 +1,17 @@
+meta {
+  name: Add Game to Game Franchise
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8080/api/game-franchise/d770fe59-7588-4d84-9b8e-5dbc2b9092f9/game
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "gameId" : "e34b1203-a673-46eb-b04a-f0fa07ff626b"
+  }
+}

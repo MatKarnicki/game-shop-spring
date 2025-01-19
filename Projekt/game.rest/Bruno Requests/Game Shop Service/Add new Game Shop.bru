@@ -1,0 +1,22 @@
+meta {
+  name: Add new Game Shop
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/game-shop
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "GameHub",
+    "address": "Gdynia, Nowa 21",
+    "phoneNumber": "+1234567890",
+    "openingTime": "09:00:00",
+    "closingTime": "21:00:00",
+    "establishedDate": "2023-05-20"
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: Add new Game Franchise
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/game-franchise
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "GTA",
+    "publisher": "Rockstar Games",
+    "genre": "Action-Adventure",
+    "revenue": 8000000000,
+    "awards": 5
+  }
+}

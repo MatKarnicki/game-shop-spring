@@ -45,6 +45,9 @@ public class GameService {
         Game existingGame = gameRepository.findById(id)
                 .orElseThrow(GameNotFoundException::new);
         updatedGame.setId(existingGame.getId());
+        updatedGame.setFranchise(existingGame.getFranchise());
+        updatedGame.setGameDetails(existingGame.getGameDetails());
+        updatedGame.setGameOffers(existingGame.getGameOffers());
         updatedGame.setIsReleased(updatedGame.getReleaseDate().isBefore(LocalDate.now().plusDays(1)));
 
         return gameRepository.save(updatedGame);

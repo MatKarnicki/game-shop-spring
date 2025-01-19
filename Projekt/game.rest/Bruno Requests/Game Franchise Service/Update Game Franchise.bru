@@ -1,0 +1,21 @@
+meta {
+  name: Update Game Franchise
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/api/game-franchise/d770fe59-7588-4d84-9b8e-5dbc2b9092f9
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "PanowiePawlowie",
+    "publisher": "Pawel",
+    "genre": "RPG",
+    "revenue": 9000000,
+    "awards": 15
+  }
+}

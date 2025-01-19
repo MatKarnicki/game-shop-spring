@@ -27,7 +27,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private GameDetails gameDetails;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -35,8 +35,8 @@ public class Game {
     private GameFranchise franchise;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
-    private List<GameShop> shops = new ArrayList<>();
+    @OneToMany(mappedBy = "game", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private List<GameOffer> gameOffers = new ArrayList<>();
 
     @NonNull
     @NotBlank(message = "Title cannot be empty or null.")

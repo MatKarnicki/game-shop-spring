@@ -1,11 +1,11 @@
 meta {
   name: Add Game Details
   type: http
-  seq: 6
+  seq: 4
 }
 
 post {
-  url: http://localhost:8080/api/games/75a643e5-1d2f-48bd-b558-77f44997e7e8/details
+  url: http://localhost:8080/api/games/1c8c0428-3e4b-4fab-b874-16c3ca451e1d/details
   body: json
   auth: none
 }
@@ -13,11 +13,8 @@ post {
 body:json {
   {
     "developer": "FromSoftware",
-    "publisher": "Bandai Namco",
     "description": "An action RPG set in a vast open world.",
     "developerFounded": "1986-11-01",
-    "publisherFounded": "1955-03-31",
-    "countryDeveloper": "Japan",
-    "countryPublisher": "Japan"
+    "countryDeveloper": "Japan"
   }
 }

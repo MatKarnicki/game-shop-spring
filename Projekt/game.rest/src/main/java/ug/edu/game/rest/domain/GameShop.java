@@ -45,12 +45,7 @@ public class GameShop {
     @PastOrPresent(message = "Established date must be in the past or present.")
     private LocalDate establishedDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "game_shop_games",
-            joinColumns = @JoinColumn(name = "shop_id"),
-            inverseJoinColumns = @JoinColumn(name = "game_id")
-    )
-    private List<Game> games = new ArrayList<>();
+    @OneToMany(mappedBy = "gameShop", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<GameOffer> gameOffers = new ArrayList<>();
 
 }

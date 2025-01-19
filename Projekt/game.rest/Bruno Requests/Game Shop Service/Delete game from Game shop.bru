@@ -1,0 +1,17 @@
+meta {
+  name: Delete game from Game shop
+  type: http
+  seq: 7
+}
+
+delete {
+  url: http://localhost:8080/api/game-shop/20536e23-a7bf-4486-9584-a781d7fe03e4/game
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "gameId":"06b3ff33-8fe1-4345-9845-754bba20422a"
+  }
+}

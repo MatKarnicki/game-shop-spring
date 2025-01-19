@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.Game;
+import ug.edu.game.rest.domain.GameOffer;
 import ug.edu.game.rest.domain.GameShop;
+import ug.edu.game.rest.dto.GameToShopDto;
 import ug.edu.game.rest.exception.GameNotFoundException;
-import ug.edu.game.rest.exception.GameNotInFranchiseException;
 import ug.edu.game.rest.exception.GameShopNotFoundException;
-import ug.edu.game.rest.repository.GameFranchiseRepository;
+import ug.edu.game.rest.repository.GameOfferRepository;
 import ug.edu.game.rest.repository.GameRepository;
 import ug.edu.game.rest.repository.GameShopRepository;
 
@@ -21,13 +22,13 @@ import java.util.UUID;
 @Service
 public class GameShopService {
     private final GameShopRepository gameShopRepository;
-    private final GameFranchiseRepository gameFranchiseRepository;
+    private final GameOfferRepository gameOfferRepository;
     private final GameRepository gameRepository;
 
     @Autowired
-    public GameShopService(GameShopRepository gameShopRepository, GameFranchiseRepository gameFranchiseRepository, GameRepository gameRepository) {
+    public GameShopService(GameShopRepository gameShopRepository, GameOfferRepository gameOfferRepository, GameRepository gameRepository) {
         this.gameShopRepository = gameShopRepository;
-        this.gameFranchiseRepository = gameFranchiseRepository;
+        this.gameOfferRepository = gameOfferRepository;
         this.gameRepository = gameRepository;
     }
 
@@ -50,7 +51,7 @@ public class GameShopService {
     public GameShop updateGameShop(UUID id, GameShop updatedGameShop) {
         GameShop existingGameShop = gameShopRepository.findById(id).orElseThrow(GameShopNotFoundException::new);
         updatedGameShop.setId(existingGameShop.getId());
-        updatedGameShop.setGames(existingGameShop.getGames());
+        updatedGameShop.setGameOffers(existingGameShop.getGameOffers());
         return gameShopRepository.save(updatedGameShop);
     }
 
@@ -61,22 +62,17 @@ public class GameShopService {
     }
 
     @Transactional
-    public GameShop addGameToShop(UUID gameShopId, UUID gameId) {
+    public GameOffer addGameToShop(UUID gameShopId, GameToShopDto gameToShopDto) {
         GameShop existingGameShop = gameShopRepository.findById(gameShopId).orElseThrow(GameShopNotFoundException::new);
-        Game existingGame = gameRepository.findById(gameId).orElseThrow(GameNotFoundException::new);
-        existingGameShop.getGames().add(existingGame);
-        return gameShopRepository.save(existingGameShop);
+        Game existingGame = gameRepository.findById(gameToShopDto.gameId()).orElseThrow(GameNotFoundException::new);
+        var newGameOffer = new GameOffer(existingGameShop, existingGame, gameToShopDto.quantity(), gameToShopDto.price());
+        return gameOfferRepository.save(newGameOffer);
     }
 
     @Transactional
-    public void removeGameFromShop(UUID gameShopId, UUID gameId) {
-        GameShop existingGameShop = gameShopRepository.findById(gameShopId).orElseThrow(GameShopNotFoundException::new);
-        Game existingGame = gameRepository.findById(gameId).orElseThrow(GameNotFoundException::new);
-        if (!existingGameShop.getGames().contains(existingGame)) {
-            throw new GameNotInFranchiseException();
-        }
-        existingGameShop.getGames().remove(existingGame);
-        gameShopRepository.save(existingGameShop);
+    public void removeGameFromShop(UUID gameOfferId) {
+        GameOffer gameOffer = gameOfferRepository.findById(gameOfferId).orElseThrow(GameNotFoundException::new);
+        gameOfferRepository.delete(gameOffer);
     }
 
     public void initializeShops() {

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ug.edu.game.rest.domain.GameOffer;
 import ug.edu.game.rest.domain.GameShop;
 import ug.edu.game.rest.dto.GameToShopDto;
 import ug.edu.game.rest.service.GameShopService;
@@ -54,13 +55,13 @@ public class GameShopController {
 
 
     @PatchMapping("/{shopId}/game")
-    public GameShop addGameToFranchise(@PathVariable UUID shopId, @RequestBody @Valid GameToShopDto gameToShopDto) {
-        return gameShopService.addGameToShop(shopId, gameToShopDto.gameId());
+    public GameOffer addGameToShop(@PathVariable UUID shopId, @RequestBody @Valid GameToShopDto gameToShopDto) {
+        return gameShopService.addGameToShop(shopId, gameToShopDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{shopId}/game")
-    public void deleteGameFromFranchiseById(@PathVariable UUID shopId, @RequestBody @Valid GameToShopDto gameToShopDto) {
-        gameShopService.removeGameFromShop(shopId, gameToShopDto.gameId());
+    @DeleteMapping("/offer/{gameOfferId}")
+    public void deleteGameFromShopById(@PathVariable UUID gameOfferId) {
+        gameShopService.removeGameFromShop(gameOfferId);
     }
 }

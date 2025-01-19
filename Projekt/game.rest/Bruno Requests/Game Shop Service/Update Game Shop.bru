@@ -1,0 +1,22 @@
+meta {
+  name: Update Game Shop
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/api/game-shop/06e4bc95-51cc-445a-8ae4-9352791b2f79
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "RatewHub",
+    "address": "Śćór, Ulepszona 21",
+    "phoneNumber": "+213769420",
+    "openingTime": "09:00:00",
+    "closingTime": "10:00:00",
+    "establishedDate": "2025-01-19"
+  }
+}
