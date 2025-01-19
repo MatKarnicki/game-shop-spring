@@ -6,18 +6,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import ug.edu.game.rest.service.GameFranchiseService;
 import ug.edu.game.rest.service.GameService;
+import ug.edu.game.rest.service.GameShopService;
 
 @SpringBootApplication
 public class GameApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(GameApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GameApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner initialize(GameService gameService, GameFranchiseService franchiseService) {
-		return args -> {
-			gameService.initializeDatabase();
-			franchiseService.initializeFranchises();
-		};
-	}
+    @Bean
+    public CommandLineRunner initialize(GameService gameService, GameFranchiseService franchiseService, GameShopService shopService) {
+        return args -> {
+            gameService.initializeDatabase();
+            franchiseService.initializeFranchises();
+            shopService.initializeShops();
+        };
+    }
 }

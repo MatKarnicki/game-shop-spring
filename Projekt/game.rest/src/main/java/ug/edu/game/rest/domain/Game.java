@@ -1,13 +1,17 @@
 package ug.edu.game.rest.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import ug.edu.game.rest.validation.DateAfter;
-import java.util.ArrayList;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,10 +30,11 @@ public class Game {
     @OneToOne(cascade = CascadeType.ALL)
     private GameDetails gameDetails;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "game_franchise_id")
     private GameFranchise franchise;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "games", fetch = FetchType.EAGER)
     private List<GameShop> shops = new ArrayList<>();
 

@@ -1,7 +1,11 @@
 package ug.edu.game.rest.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -27,20 +31,10 @@ public class GameDetails {
     private LocalDate developerFounded;
 
     @NonNull
-    @NotBlank(message = "Publisher name cannot be empty.")
-    private String publisher;
-
-    @NonNull
-    private LocalDate publisherFounded;
-
-    @NonNull
     private String countryDeveloper;
 
     @NonNull
-    private String countryPublisher;
-
-    @NonNull
-    @Size(min = 3,max = 255, message = "Title must contain at least 3 characters and at most 255 characters")
+    @Size(min = 3, max = 255, message = "Title must contain at least 3 characters and at most 255 characters")
     private String description;
 
 

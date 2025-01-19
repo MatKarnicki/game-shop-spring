@@ -1,11 +1,13 @@
 package ug.edu.game.rest.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ug.edu.game.rest.domain.GameFranchise;
+import ug.edu.game.rest.dto.GameToFranchiseDto;
 import ug.edu.game.rest.service.GameFranchiseService;
 
 import java.net.URI;
@@ -50,4 +52,14 @@ public class GameFranchiseController {
         gameFranchiseService.deleteGameFranchise(id);
     }
 
+    @PatchMapping("/{franchiseId}/game")
+    public GameFranchise addGameToFranchise(@PathVariable UUID franchiseId, @RequestBody @Valid GameToFranchiseDto gameToFranchiseDto) {
+        return gameFranchiseService.addGameToFranchise(franchiseId, gameToFranchiseDto.gameId());
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{franchiseId}/game")
+    public void deleteGameFromFranchiseById(@PathVariable UUID franchiseId, @RequestBody @Valid GameToFranchiseDto gameToFranchiseDto) {
+        gameFranchiseService.removeGameFromFranchise(franchiseId, gameToFranchiseDto.gameId());
+    }
 }

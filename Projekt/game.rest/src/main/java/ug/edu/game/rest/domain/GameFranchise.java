@@ -35,9 +35,6 @@ public class GameFranchise {
     private String publisher;
 
     @NonNull
-    private String genre;
-
-    @NonNull
     @PositiveOrZero(message = "Revenue must be zero or a positive value.")
     private Float revenue;
 

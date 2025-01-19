@@ -3,7 +3,6 @@ package ug.edu.game.rest.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -33,7 +32,7 @@ public class GameShop {
     private String address;
 
     @NonNull
-    @Pattern(regexp = "^\\+?[0-9\\-\\s]+$", message = "Phone number is not valid.")
+//    @Pattern(regexp = "^\\+?[0-9\\-\\s]+$", message = "Phone number is not valid.")
     private String phoneNumber;
 
     @NonNull
