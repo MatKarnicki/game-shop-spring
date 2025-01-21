@@ -1,0 +1,15 @@
+meta {
+  name: Get All Shops Open
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/api/game-shop/currently-open?time=15:00:00
+  body: none
+  auth: none
+}
+
+params:query {
+  time: 15:00:00
+}

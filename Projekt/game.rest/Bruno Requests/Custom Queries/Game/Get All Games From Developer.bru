@@ -1,0 +1,15 @@
+meta {
+  name: Get All Games From Developer
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/games/findDeveloper?developer=fromsoftware
+  body: none
+  auth: none
+}
+
+params:query {
+  developer: fromsoftware
+}

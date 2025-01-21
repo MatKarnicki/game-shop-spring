@@ -1,0 +1,15 @@
+meta {
+  name: Get All Shops with games from a developer
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/game-offer/shop-with-developer?developer=FromSoftware
+  body: none
+  auth: none
+}
+
+params:query {
+  developer: FromSoftware
+}

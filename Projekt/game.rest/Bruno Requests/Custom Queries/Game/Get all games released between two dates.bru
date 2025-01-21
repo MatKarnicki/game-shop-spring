@@ -1,0 +1,16 @@
+meta {
+  name: Get all games released between two dates
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/api/games/betweenDates?releaseDateFloor=2018-03-31&releaseDateCeiling=2024-01-20
+  body: none
+  auth: none
+}
+
+params:query {
+  releaseDateFloor: 2018-03-31
+  releaseDateCeiling: 2024-01-20
+}

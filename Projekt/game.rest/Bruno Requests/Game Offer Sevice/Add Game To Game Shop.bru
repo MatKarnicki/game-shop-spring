@@ -1,0 +1,19 @@
+meta {
+  name: Add Game To Game Shop
+  type: http
+  seq: 1
+}
+
+patch {
+  url: http://localhost:8080/api/game-offer/009d7494-63c7-46c4-8869-cbd4bdaaa2c5
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "gameId":"0f742cb9-9c5d-4586-873b-99d5f1f004b6",
+    "quantity":237,
+    "price": 42.0
+  }
+}

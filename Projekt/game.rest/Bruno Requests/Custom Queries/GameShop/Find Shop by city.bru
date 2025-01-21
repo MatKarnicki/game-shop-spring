@@ -1,0 +1,15 @@
+meta {
+  name: Find Shop by city
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/game-shop/find-by-name?address=Gdańsk
+  body: none
+  auth: none
+}
+
+params:query {
+  address: Gdańsk
+}

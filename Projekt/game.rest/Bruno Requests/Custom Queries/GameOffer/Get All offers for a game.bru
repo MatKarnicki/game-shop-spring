@@ -1,0 +1,15 @@
+meta {
+  name: Get All offers for a game
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/api/game-offer/all-offers?title=Bloodborne
+  body: none
+  auth: none
+}
+
+params:query {
+  title: Bloodborne
+}
