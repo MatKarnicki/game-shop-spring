@@ -11,6 +11,7 @@ import ug.edu.game.rest.domain.GameDetails;
 import ug.edu.game.rest.service.GameService;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,4 +72,16 @@ public class GameController {
     public void removeGameDetails(@PathVariable UUID gameId, @PathVariable String detailsId) {
         gameService.deleteGameDetails(gameId, detailsId);
     }
+
+    @GetMapping("/findDeveloper")
+    public List<Game> findAllByGameDetailsDeveloperEqualsIgnoreCase(@RequestParam String developer) {
+        return gameService.findAllByGameDetailsDeveloperEqualsIgnoreCase(developer);
+    }
+
+    @GetMapping("/betweenDates")
+    public List<Game> findAllByReleaseDateIsAfterAndReleaseDateBefore(@RequestParam LocalDate releaseDateFloor, @RequestParam LocalDate releaseDateCeiling) {
+        return gameService.findAllByReleaseDateIsAfterAndReleaseDateBefore(releaseDateFloor, releaseDateCeiling);
+    }
+
+    ;
 }

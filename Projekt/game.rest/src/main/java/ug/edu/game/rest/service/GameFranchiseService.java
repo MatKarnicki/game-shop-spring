@@ -11,7 +11,6 @@ import ug.edu.game.rest.exception.GameNotInFranchiseException;
 import ug.edu.game.rest.repository.GameFranchiseRepository;
 import ug.edu.game.rest.repository.GameRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,20 +73,5 @@ public class GameFranchiseService {
         }
         existingGame.setFranchise(null);
         gameRepository.save(existingGame);
-    }
-
-    @Transactional
-    public void initializeFranchises() {
-        gameFranchiseRepository.saveAll(Arrays.asList(
-                new GameFranchise("Souls Series", "FromSoftware", 75000000f),
-                new GameFranchise("Monster Hunter", "Capcom", 27000000f),
-                new GameFranchise("Final Fantasy", "Square Enix", 200000000f),
-                new GameFranchise("Wiedźmin", "CD Projekt Red", 52000000f),
-                new GameFranchise("Devil May Cry", "Capcom", 9000000f),
-                new GameFranchise("Rocket League", "Psyonix", 10000000f),
-                new GameFranchise("Stardew Valley", "ConcernedApe", 20000000f),
-                new GameFranchise("Animal Crossing", "Nintendo", 100000000f),
-                new GameFranchise("Overwatch", "Blizzard Entertainment", 50000000f)
-        ));
     }
 }

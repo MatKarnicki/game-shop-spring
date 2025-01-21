@@ -9,9 +9,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ug.edu.game.rest.domain.GameOffer;
 import ug.edu.game.rest.domain.GameShop;
 import ug.edu.game.rest.dto.GameToShopDto;
+import ug.edu.game.rest.dto.ShopRevenueDto;
+import ug.edu.game.rest.dto.ShopWithoutOfferDto;
 import ug.edu.game.rest.service.GameShopService;
 
 import java.net.URI;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,5 +66,20 @@ public class GameShopController {
     @DeleteMapping("/offer/{gameOfferId}")
     public void deleteGameFromShopById(@PathVariable UUID gameOfferId) {
         gameShopService.removeGameFromShop(gameOfferId);
+    }
+
+    @GetMapping("/find-by-name")
+    public List<ShopWithoutOfferDto> findAllByAddressContainingIgnoreCase(@RequestParam String address) {
+        return gameShopService.findAllByAddressContainingIgnoreCase(address);
+    }
+
+    @GetMapping("/currently-open")
+    public List<ShopWithoutOfferDto> getCurrentlyOpenShops(@RequestParam LocalTime time) {
+        return gameShopService.findAllCurrentlyOpen(time);
+    }
+
+    @GetMapping("/revenue/{shopId}")
+    public ShopRevenueDto calculateExpectedRevenueForShop(@PathVariable UUID shopId) {
+        return gameShopService.calculateExpectedRevenueForShop(shopId);
     }
 }
