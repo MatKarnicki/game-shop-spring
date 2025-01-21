@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class GameDetailsNotFoundException extends RuntimeException {
     public GameDetailsNotFoundException() {
-        super("Game detail with given ID not found");
+        super("Game details not found");
     }
 }

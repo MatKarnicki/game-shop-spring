@@ -69,12 +69,12 @@ public class GameService {
     }
 
     @Transactional
-    public GameDetails updateGameDetails(UUID gameId, String detailsId, GameDetails updatedDetails) {
+    public GameDetails updateGameDetails(UUID gameId, GameDetails updatedDetails) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
 
         GameDetails existingDetails = game.getGameDetails();
-        if (existingDetails == null || !existingDetails.getId().equals(UUID.fromString(detailsId))) {
+        if (existingDetails == null) {
             throw new GameDetailsNotFoundException();
         }
         updatedDetails.setId(existingDetails.getId());
@@ -84,12 +84,12 @@ public class GameService {
     }
 
     @Transactional
-    public void deleteGameDetails(UUID gameId, String detailsId) {
+    public void deleteGameDetails(UUID gameId) {
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(GameNotFoundException::new);
 
         GameDetails existingDetails = game.getGameDetails();
-        if (existingDetails == null || !existingDetails.getId().equals(UUID.fromString(detailsId))) {
+        if (existingDetails == null) {
             throw new GameDetailsNotFoundException();
         }
 

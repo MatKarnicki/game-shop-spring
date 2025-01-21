@@ -1,14 +1,11 @@
 package ug.edu.game.rest.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ug.edu.game.rest.domain.GameOffer;
 import ug.edu.game.rest.domain.GameShop;
-import ug.edu.game.rest.dto.GameToShopDto;
 import ug.edu.game.rest.dto.ShopRevenueDto;
 import ug.edu.game.rest.dto.ShopWithoutOfferDto;
 import ug.edu.game.rest.service.GameShopService;
@@ -56,18 +53,6 @@ public class GameShopController {
         gameShopService.deleteGameShop(id);
     }
 
-
-    @PatchMapping("/{shopId}/game")
-    public GameOffer addGameToShop(@PathVariable UUID shopId, @RequestBody @Valid GameToShopDto gameToShopDto) {
-        return gameShopService.addGameToShop(shopId, gameToShopDto);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/offer/{gameOfferId}")
-    public void deleteGameFromShopById(@PathVariable UUID gameOfferId) {
-        gameShopService.removeGameFromShop(gameOfferId);
-    }
-
     @GetMapping("/find-by-name")
     public List<ShopWithoutOfferDto> findAllByAddressContainingIgnoreCase(@RequestParam String address) {
         return gameShopService.findAllByAddressContainingIgnoreCase(address);
@@ -78,7 +63,7 @@ public class GameShopController {
         return gameShopService.findAllCurrentlyOpen(time);
     }
 
-    @GetMapping("/revenue/{shopId}")
+    @GetMapping("/{shopId}/revenue")
     public ShopRevenueDto calculateExpectedRevenueForShop(@PathVariable UUID shopId) {
         return gameShopService.calculateExpectedRevenueForShop(shopId);
     }

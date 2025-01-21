@@ -60,17 +60,17 @@ public class GameController {
         return ResponseEntity.created(location).body(createdDetails);
     }
 
-    @PutMapping("/{gameId}/details/{detailsId}")
-    public GameDetails updateGameDetails(@PathVariable UUID gameId, @PathVariable String detailsId,
+    @PutMapping("/{gameId}/details")
+    public GameDetails updateGameDetails(@PathVariable UUID gameId,
                                          @Valid @RequestBody GameDetails updatedDetails) {
-        return gameService.updateGameDetails(gameId, detailsId, updatedDetails);
+        return gameService.updateGameDetails(gameId, updatedDetails);
 
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{gameId}/details/{detailsId}")
-    public void removeGameDetails(@PathVariable UUID gameId, @PathVariable String detailsId) {
-        gameService.deleteGameDetails(gameId, detailsId);
+    @DeleteMapping("/{gameId}/details")
+    public void removeGameDetails(@PathVariable UUID gameId) {
+        gameService.deleteGameDetails(gameId);
     }
 
     @GetMapping("/findDeveloper")
