@@ -67,4 +67,6 @@ public class GameShopController {
     public ShopRevenueDto calculateExpectedRevenueForShop(@PathVariable UUID shopId) {
         return gameShopService.calculateExpectedRevenueForShop(shopId);
     }
+
+
 }

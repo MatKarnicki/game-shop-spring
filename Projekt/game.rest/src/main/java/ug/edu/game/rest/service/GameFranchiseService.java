@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.Game;
 import ug.edu.game.rest.domain.GameFranchise;
+import ug.edu.game.rest.dto.FranchiseGameCountDto;
+import ug.edu.game.rest.dto.FranchisePerShopDto;
 import ug.edu.game.rest.exception.GameFranchiseNotFoundException;
 import ug.edu.game.rest.exception.GameNotFoundException;
 import ug.edu.game.rest.exception.GameNotInFranchiseException;
 import ug.edu.game.rest.repository.GameFranchiseRepository;
 import ug.edu.game.rest.repository.GameRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,5 +76,20 @@ public class GameFranchiseService {
         }
         existingGame.setFranchise(null);
         gameRepository.save(existingGame);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameFranchise> findByLastReleaseDateAfter(LocalDate lastReleaseDate) {
+        return gameFranchiseRepository.findByLastReleaseDateAfter(lastReleaseDate);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FranchisePerShopDto> findShopsWithGameCountFromFranchise(String franchise) {
+        return gameFranchiseRepository.findShopsWithGameCountFromFranchise(franchise);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FranchiseGameCountDto> findAllFranchisesWithGameCount() {
+        return gameFranchiseRepository.findAllFranchisesWithGameCount();
     }
 }

@@ -7,10 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ug.edu.game.rest.domain.GameFranchise;
+import ug.edu.game.rest.dto.FranchiseGameCountDto;
+import ug.edu.game.rest.dto.FranchisePerShopDto;
 import ug.edu.game.rest.dto.GameToFranchiseDto;
 import ug.edu.game.rest.service.GameFranchiseService;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,5 +64,20 @@ public class GameFranchiseController {
     @DeleteMapping("/{franchiseId}/game")
     public void deleteGameFromFranchiseById(@PathVariable UUID franchiseId, @RequestBody @Valid GameToFranchiseDto gameToFranchiseDto) {
         gameFranchiseService.removeGameFromFranchise(franchiseId, gameToFranchiseDto.gameId());
+    }
+
+    @GetMapping("/released-after")
+    public List<GameFranchise> findByLastReleaseDateAfter(@RequestParam LocalDate date) {
+        return gameFranchiseService.findByLastReleaseDateAfter(date);
+    }
+
+    @GetMapping("/shops-with-franchise")
+    public List<FranchisePerShopDto> findAllShopsContainingGamesFromFranchise(@RequestParam String franchise) {
+        return gameFranchiseService.findShopsWithGameCountFromFranchise(franchise);
+    }
+
+    @GetMapping("/game-count")
+    public List<FranchiseGameCountDto> findAllFranchisesWithGameCount() {
+        return gameFranchiseService.findAllFranchisesWithGameCount();
     }
 }
