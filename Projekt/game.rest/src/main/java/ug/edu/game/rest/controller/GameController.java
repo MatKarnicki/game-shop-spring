@@ -83,5 +83,8 @@ public class GameController {
         return gameService.findAllByReleaseDateIsAfterAndReleaseDateBefore(releaseDateFloor, releaseDateCeiling);
     }
 
-    ;
+    @GetMapping("/games-by-franchise")
+    public List<Game> findAllByGameDetailsFranchise(@RequestParam UUID franchiseId) {
+        return gameService.findByFranchise_Id(franchiseId);
+    }
 }

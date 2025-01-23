@@ -134,10 +134,12 @@ public class DataBaseInitializer {
 
     private void createOffersForGames(List<Game> games, List<GameShop> gameShops) {
         for (Game game : games) {
-            for (int i = 0; i < 3; i++) {
-                GameShop shop = gameShops.get(i % gameShops.size());
+            Integer shopIndex = 0;
+            for (int i = 0; i < 2; i++) {
+                GameShop shop = gameShops.get(shopIndex % gameShops.size());
                 GameOffer offer = new GameOffer(shop, game, 10 + i * 5, 30.0 + (int) (Math.random() * 20));
                 gameOfferRepository.save(offer);
+                shopIndex++;
             }
         }
     }

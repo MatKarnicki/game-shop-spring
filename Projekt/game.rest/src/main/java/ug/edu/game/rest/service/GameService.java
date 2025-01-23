@@ -1,6 +1,8 @@
 package ug.edu.game.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.Game;
@@ -105,5 +107,15 @@ public class GameService {
     @Transactional(readOnly = true)
     public List<Game> findAllByReleaseDateIsAfterAndReleaseDateBefore(LocalDate releaseDateFloor, LocalDate releaseDateCeiling) {
         return gameRepository.findAllByReleaseDateIsAfterAndReleaseDateBefore(releaseDateFloor, releaseDateCeiling);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Game> findByFranchise_Id(UUID franchiseId) {
+        return gameRepository.findByFranchise_Id(franchiseId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Game> getPaginatedGames(Pageable pageable) {
+        return gameRepository.findAll(pageable);
     }
 }

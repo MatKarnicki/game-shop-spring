@@ -68,4 +68,6 @@ public class GameOfferService {
     public List<GameOfferDto> findAllByGame_Title(String title) {
         return gameOfferRepository.findAllByGame_Title(title);
     }
+
+
 }

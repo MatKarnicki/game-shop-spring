@@ -54,5 +54,4 @@ public class GameOfferController {
     public List<GameOfferDto> findAllByGame_Title(@RequestParam String title) {
         return gameOfferService.findAllByGame_Title(title);
     }
-
 }

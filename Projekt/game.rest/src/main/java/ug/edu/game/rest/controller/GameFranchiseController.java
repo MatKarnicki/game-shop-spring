@@ -80,4 +80,5 @@ public class GameFranchiseController {
     public List<FranchiseGameCountDto> findAllFranchisesWithGameCount() {
         return gameFranchiseService.findAllFranchisesWithGameCount();
     }
+
 }

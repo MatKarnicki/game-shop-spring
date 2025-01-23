@@ -92,4 +92,5 @@ public class GameFranchiseService {
     public List<FranchiseGameCountDto> findAllFranchisesWithGameCount() {
         return gameFranchiseRepository.findAllFranchisesWithGameCount();
     }
+
 }

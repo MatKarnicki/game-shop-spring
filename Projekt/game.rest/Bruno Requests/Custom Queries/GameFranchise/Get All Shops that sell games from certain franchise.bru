@@ -1,0 +1,15 @@
+meta {
+  name: Get All Shops that sell games from certain franchise
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/api/game-franchise/shops-with-franchise?franchise=Devil May Cry
+  body: none
+  auth: none
+}
+
+params:query {
+  franchise: Devil May Cry
+}

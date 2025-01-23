@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GameRepository extends JpaRepository<Game, UUID> {
-
+    List<Game> findByFranchise_Id(UUID franchiseId);
+    
     List<Game> findAllByGameDetailsDeveloperEqualsIgnoreCase(String developer);
 
     List<Game> findAllByReleaseDateIsAfterAndReleaseDateBefore(LocalDate releaseDateFloor, LocalDate releaseDateCeiling);
