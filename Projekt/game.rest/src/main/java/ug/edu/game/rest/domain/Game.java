@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 import ug.edu.game.rest.validation.DateAfter;
 
@@ -51,7 +52,10 @@ public class Game {
     @PositiveOrZero(message = "Sales must be a non-negative number.")
     private Integer sales;
 
+
+    @Formula("(release_date < current_date + INTERVAL 1 DAY)")
     private Boolean isReleased;
+
 
     @NonNull
     @NotNull(message = "Release date is required.")
@@ -59,11 +63,4 @@ public class Game {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
-    public Game(String title, String genre, LocalDate releaseDate, Integer sales) {
-        this.title = title;
-        this.genre = genre;
-        this.releaseDate = releaseDate;
-        this.sales = sales;
-        this.isReleased = releaseDate.isBefore(LocalDate.now().plusDays(1));
-    }
 }
