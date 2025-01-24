@@ -47,7 +47,13 @@
                            class="bi"></i>
                     </a>
                 </th>
-                <th>Sales</th>
+                <th>
+                    <a th:href="@{/games(sort='sales', order=${sort == 'sales' and order == 'asc' ? 'desc' : 'asc'})}">
+                        Sales
+                        <i th:classappend="${sort == 'sales'} ? (order == 'asc' ? 'bi bi-sort-numeric-down' : 'bi bi-sort-numeric-up')"
+                           class="bi"></i>
+                    </a>
+                </th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -77,18 +83,26 @@
 
     <nav>
         <ul class="pagination justify-content-center">
+            <!-- Previous button -->
             <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
-                <a th:href="@{/games(page=${currentPage - 1})}" class="page-link">Previous</a>
+                <a th:href="@{/games(page=${currentPage - 1}, sort=${sort}, order=${order})}"
+                   class="page-link">Previous</a>
             </li>
+
+            <!-- Page number buttons -->
             <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
                 th:classappend="${pageNum == currentPage} ? 'active'" class="page-item">
-                <a th:href="@{/games(page=${pageNum})}" class="page-link" th:text="${pageNum + 1}"></a>
+                <a th:href="@{/games(page=${pageNum}, sort=${sort}, order=${order})}" class="page-link"
+                   th:text="${pageNum + 1}"></a>
             </li>
+
+            <!-- Next button -->
             <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'" class="page-item">
-                <a th:href="@{/games(page=${currentPage + 1})}" class="page-link">Next</a>
+                <a th:href="@{/games(page=${currentPage + 1}, sort=${sort}, order=${order})}" class="page-link">Next</a>
             </li>
         </ul>
     </nav>
+
 </div>
 
 </body>
