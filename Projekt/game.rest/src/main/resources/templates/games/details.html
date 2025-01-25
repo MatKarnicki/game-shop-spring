@@ -10,6 +10,7 @@
         <div class="col-md-8">
             <h1 th:text="${game.title}" class="mb-4">Game Title</h1>
 
+            <!-- Game Information -->
             <div class="card mb-3">
                 <div class="card-header">Game Information</div>
                 <div class="card-body">
@@ -33,6 +34,7 @@
                 </div>
             </div>
 
+            <!-- Game Details -->
             <div th:if="${game.gameDetails}" class="card mb-3">
                 <div class="card-header">Game Details</div>
                 <div class="card-body">
@@ -46,8 +48,28 @@
                             th:text="${game.gameDetails.description}">Game Description</span></p>
                 </div>
             </div>
+
+            <!-- Game Franchise Details -->
+            <div th:if="${game.franchise}" class="card mb-3">
+                <div class="card-header">Franchise Details</div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> <span th:text="${game.franchise.name}">Franchise Name</span></p>
+                    <p><strong>Publisher:</strong> <span
+                            th:text="${game.franchise.publisher}">Franchise Publisher</span></p>
+                    <p><strong>Revenue:</strong> <span th:text="${#numbers.formatCurrency(game.franchise.revenue)}">Franchise Revenue</span>
+                    </p>
+                    <p><strong>Awards:</strong> <span
+                            th:text="${game.franchise.awards ?: 'N/A'}">Franchise Awards</span></p>
+                    <p><strong>Last Release Date:</strong>
+                        <span th:text="${game.franchise.lastReleaseDate != null ? #temporals.format(game.franchise.lastReleaseDate, 'dd MMMM yyyy') : 'N/A'}">
+                            Last Release Date
+                        </span>
+                    </p>
+                </div>
+            </div>
         </div>
 
+        <!-- Pricing Information -->
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">Pricing Information</div>
@@ -78,8 +100,21 @@
         </div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="mt-3">
-        <a th:href="@{/games/edit/{id}(id=${game.id})}" class="btn btn-warning">Edit Game</a>
+        <a th:if="${game.gameDetails == null}" th:href="@{/games/details/{id}/add-details(id=${game.id})}"
+           class="btn btn-success">Add Game Details</a>
+        <a th:if="${game.gameDetails != null}" th:href="@{/games/details/{id}/edit-details(id=${game.id})}"
+           class="btn btn-primary">Edit Game Details</a>
+        <form th:if="${game.gameDetails != null}"
+              th:action="@{/games/details/{id}/delete-details(id=${game.id})}"
+              method="post"
+              class="d-inline">
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to delete the game details?');">
+                Delete Game Details
+            </button>
+        </form>
         <a th:href="@{/games}" class="btn btn-secondary">Back to Games</a>
     </div>
 </div>

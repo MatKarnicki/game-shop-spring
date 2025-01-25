@@ -64,7 +64,7 @@
                 <td th:text="${#temporals.format(game.releaseDate, 'dd-MM-yyyy')}">Release Date</td>
                 <td th:text="${game.sales}">Sales</td>
                 <td>
-                    <a th:href="@{/games/details/{id}(id=${game.id})}" class="btn btn-sm btn-info">
+                    <a th:href="@{/games/{id}(id=${game.id})}" class="btn btn-sm btn-info">
                         <i class="bi bi-eye"></i> View
                     </a>
                     <a th:href="@{/games/edit/{id}(id=${game.id})}" class="btn btn-sm btn-warning">

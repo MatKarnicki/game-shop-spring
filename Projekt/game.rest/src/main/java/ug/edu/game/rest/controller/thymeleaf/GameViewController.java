@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ug.edu.game.rest.domain.Game;
+import ug.edu.game.rest.domain.GameDetails;
 import ug.edu.game.rest.domain.GameOffer;
 import ug.edu.game.rest.dto.GameOfferDto;
 import ug.edu.game.rest.service.GameOfferService;
@@ -92,7 +93,7 @@ public class GameViewController {
         return "redirect:/games";
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("{id}")
     public String showGameDetails(@PathVariable UUID id, Model model) {
         Game game = gameService.getGameById(id);
 
@@ -121,5 +122,55 @@ public class GameViewController {
         redirectAttributes.addFlashAttribute("successMessage",
                 "Game deleted successfully!");
         return "redirect:/games";
+    }
+
+    @GetMapping("/details/{id}/add-details")
+    public String showAddGameDetailsForm(@PathVariable UUID id, Model model) {
+        GameDetails gameDetails = new GameDetails();
+        model.addAttribute("gameDetails", gameDetails);
+        model.addAttribute("gameId", id);
+        return "games/gameDetailsForm";
+    }
+
+    @GetMapping("/details/{id}/edit-details")
+    public String showEditGameDetailsForm(@PathVariable UUID id, Model model) {
+        Game game = gameService.getGameById(id);
+        GameDetails gameDetails = game.getGameDetails();
+        model.addAttribute("gameDetails", gameDetails);
+        model.addAttribute("gameId", id);
+        return "games/gameDetailsForm";
+    }
+
+    @PostMapping("/details/{gameId}/save")
+    public String saveGameDetails(
+            @Valid @ModelAttribute("gameDetails") GameDetails gameDetails,
+            BindingResult bindingResult,
+            @PathVariable("gameId") UUID gameId,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "games/gameDetailsForm";
+        }
+
+        Game game = gameService.getGameById(gameId);
+        if (game == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Game not found!");
+            return "redirect:/games";
+        }
+
+        GameDetails savedGameDetails = (game.getGameDetails() == null)
+                ? gameService.addGameDetails(gameId, gameDetails)
+                : gameService.updateGameDetails(gameId, gameDetails);
+
+        redirectAttributes.addFlashAttribute("successMessage",
+                "Game details for \"" + game.getTitle() + "\" saved successfully!");
+        return "redirect:/games/" + gameId;
+    }
+
+    @PostMapping("/details/{id}/delete-details")
+    public String deleteGameDetails(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+        gameService.deleteGameDetails(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Game details deleted successfully!");
+        return "redirect:/games/" + id;
     }
 }

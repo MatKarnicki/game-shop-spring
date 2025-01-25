@@ -40,15 +40,16 @@ public class Game {
     private List<GameOffer> gameOffers = new ArrayList<>();
 
     @NonNull
-    @NotBlank(message = "Title cannot be empty or null.")
+    @NotBlank(message = "Title cannot be empty.")
     @Pattern(regexp = "^[A-Z0-9].*", message = "Title must begin with a capital letter or a number.")
     private String title;
 
     @NonNull
-    @NotBlank(message = "Genre cannot be empty or null.")
+    @NotBlank(message = "Genre cannot be empty.")
     private String genre;
 
     @NonNull
+    @NotNull(message = "Sales cannot be empty.")
     @PositiveOrZero(message = "Sales must be a non-negative number.")
     private Integer sales;
 

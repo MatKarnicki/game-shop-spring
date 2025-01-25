@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,9 +30,12 @@ public class GameDetails {
     private String developer;
 
     @NonNull
+    @NotNull(message = "Founded date is required.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate developerFounded;
 
     @NonNull
+    @NotBlank(message = "Country of a developer is required.")
     private String countryDeveloper;
 
     @NonNull
