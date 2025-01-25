@@ -19,7 +19,7 @@ public interface GameShopRepository extends JpaRepository<GameShop, UUID> {
 
     @Query("SELECT new ug.edu.game.rest.dto.ShopRevenueDto(" +
             "go.gameShop.id, " +
-            "SUM(go.price), " +
+            "SUM(go.price * go.quantity), " +
             "COUNT(DISTINCT go.game.id)) " +
             "FROM GameOffer go " +
             "WHERE go.gameShop.id = :shopId " +

@@ -10,6 +10,7 @@ import ug.edu.game.rest.dto.GameOfferDto;
 import ug.edu.game.rest.dto.GameToShopDto;
 import ug.edu.game.rest.dto.ShopWithoutOfferDto;
 import ug.edu.game.rest.exception.GameNotFoundException;
+import ug.edu.game.rest.exception.GameOfferNotFoundException;
 import ug.edu.game.rest.exception.GameShopNotFoundException;
 import ug.edu.game.rest.repository.GameOfferRepository;
 import ug.edu.game.rest.repository.GameRepository;
@@ -35,12 +36,32 @@ public class GameOfferService {
         this.gameOfferRepository = gameOfferRepository;
     }
 
+    @Transactional(readOnly = true)
+    public List<GameOffer> getAllGameOffers() {
+        return gameOfferRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public GameOffer getGameOfferById(UUID gameOfferId) {
+        return gameOfferRepository.findById(gameOfferId).orElseThrow(GameOfferNotFoundException::new);
+    }
+
+
     @Transactional
     public GameOffer addGameToShop(UUID gameShopId, GameToShopDto gameToShopDto) {
         GameShop existingGameShop = gameShopRepository.findById(gameShopId).orElseThrow(GameShopNotFoundException::new);
         Game existingGame = gameRepository.findById(gameToShopDto.gameId()).orElseThrow(GameNotFoundException::new);
         var newGameOffer = new GameOffer(existingGameShop, existingGame, gameToShopDto.quantity(), gameToShopDto.price());
         return gameOfferRepository.save(newGameOffer);
+    }
+
+    @Transactional
+    public GameOffer updateGameOffer(UUID gameOfferId, GameOffer updatedGameOffer) {
+        GameOffer existingGameOffer = gameOfferRepository.findById(gameOfferId).orElseThrow(GameOfferNotFoundException::new);
+        updatedGameOffer.setId(existingGameOffer.getId());
+        updatedGameOffer.setGame(existingGameOffer.getGame());
+        updatedGameOffer.setGameShop(existingGameOffer.getGameShop());
+        return gameOfferRepository.save(updatedGameOffer);
     }
 
     @Transactional

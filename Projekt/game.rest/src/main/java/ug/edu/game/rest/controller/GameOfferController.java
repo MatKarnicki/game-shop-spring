@@ -24,9 +24,24 @@ public class GameOfferController {
         this.gameOfferService = gameOfferService;
     }
 
+    @GetMapping
+    public List<GameOffer> getAllGameOffers() {
+        return gameOfferService.getAllGameOffers();
+    }
+
+    @GetMapping("{gameOfferId}")
+    public GameOffer getGameOfferById(@PathVariable UUID gameOfferId) {
+        return gameOfferService.getGameOfferById(gameOfferId);
+    }
+
     @PatchMapping("/{shopId}")
     public GameOffer addGameToShop(@PathVariable UUID shopId, @RequestBody @Valid GameToShopDto gameToShopDto) {
         return gameOfferService.addGameToShop(shopId, gameToShopDto);
+    }
+
+    @PostMapping("/{GameOfferId}")
+    public GameOffer updateGameOffer(@PathVariable UUID GameOfferId, @RequestBody @Valid GameOffer gameOffer) {
+        return gameOfferService.updateGameOffer(GameOfferId, gameOffer);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

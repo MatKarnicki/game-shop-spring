@@ -1,6 +1,8 @@
 package ug.edu.game.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.GameShop;
@@ -74,4 +76,10 @@ public class GameShopService {
     public ShopRevenueDto calculateExpectedRevenueForShop(UUID shopId) {
         return gameShopRepository.calculateExpectedRevenueForShop(shopId);
     }
+
+    @Transactional(readOnly = true)
+    public Page<GameShop> getPaginatedShops(Pageable pageable) {
+        return gameShopRepository.findAll(pageable);
+    }
+
 }

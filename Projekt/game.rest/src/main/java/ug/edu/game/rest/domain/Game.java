@@ -57,7 +57,6 @@ public class Game {
     @Formula("(release_date < current_date + INTERVAL 1 DAY)")
     private Boolean isReleased;
 
-
     @NonNull
     @NotNull(message = "Release date is required.")
     @DateAfter("1958-10-01")

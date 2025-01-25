@@ -34,4 +34,5 @@ public interface GameOfferRepository extends JpaRepository<GameOffer, UUID> {
             "JOIN go.gameShop gs " +
             "WHERE g.title = :title")
     List<GameOfferDto> findAllByGame_Title(@Param("title") String title);
+
 }

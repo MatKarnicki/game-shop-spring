@@ -45,11 +45,11 @@ public class DataBaseInitializer {
                 new GameFranchise("Overwatch", "Blizzard Entertainment", 50000000f)
         ));
         gameShopRepository.saveAll(List.of(
-                new GameShop("GameHub", "Przykładów, Przykładówny 6", "+1234567890", LocalTime.of(9, 0), LocalTime.of(21, 0), LocalDate.of(2010, 5, 20)),
-                new GameShop("Virtual Paradise", "Gdańsk, WitkaStwosza 210", "+9876543210", LocalTime.of(10, 0), LocalTime.of(22, 0), LocalDate.of(2015, 8, 15)),
-                new GameShop("Retro Realm", "Sopot, Recenzyjna 1", "+1122334455", LocalTime.of(8, 30), LocalTime.of(20, 30), LocalDate.of(2005, 11, 10)),
-                new GameShop("Virtual Vault", "Gdynia, Kościuszki 55", "+9988776655", LocalTime.of(11, 0), LocalTime.of(23, 0), LocalDate.of(2020, 1, 1)),
-                new GameShop("Game Vault", "Gdańsk, Kościuszki 66", "+2233445566", LocalTime.of(9, 30), LocalTime.of(21, 30), LocalDate.of(2000, 4, 5))
+                new GameShop("GameHub", "Przykładów, Przykładówny 6", "+48 123456789", LocalTime.of(9, 0), LocalTime.of(21, 0), LocalDate.of(2010, 5, 20)),
+                new GameShop("Virtual Paradise", "Gdańsk, WitkaStwosza 210", "+48 987654321", LocalTime.of(10, 0), LocalTime.of(22, 0), LocalDate.of(2015, 8, 15)),
+                new GameShop("Retro Realm", "Sopot, Recenzyjna 1", "+48 112233445", LocalTime.of(8, 30), LocalTime.of(20, 30), LocalDate.of(2005, 11, 10)),
+                new GameShop("Virtual Vault", "Gdynia, Kościuszki 55", "+48 998877665", LocalTime.of(11, 0), LocalTime.of(23, 0), LocalDate.of(2020, 1, 1)),
+                new GameShop("Game Vault", "Gdańsk, Kościuszki 66", "+48 246732091", LocalTime.of(9, 30), LocalTime.of(21, 30), LocalDate.of(2000, 4, 5))
         ));
         gameRepository.saveAll(List.of(
                 new Game("Bloodborne", "Souls-like", 10000000, LocalDate.of(2015, 10, 11)),
