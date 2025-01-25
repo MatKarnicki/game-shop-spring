@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Games List</title>
+    <title>Game Franchises</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
           rel="stylesheet">
@@ -9,11 +9,11 @@
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-4">
-    <h1>Games</h1>
+    <h1>Game Franchises</h1>
 
-    <!-- Add Game Button -->
-    <a th:href="@{/games/new}" class="btn btn-primary mb-3">
-        <i class="bi bi-plus-circle"></i> Add New Game
+    <!-- Add Franchise Button -->
+    <a th:href="@{/franchises/new}" class="btn btn-primary mb-3">
+        <i class="bi bi-plus-circle"></i> Add New Franchise
     </a>
 
     <!-- Success Message -->
@@ -22,36 +22,36 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!-- Games Table -->
+    <!-- Franchises Table -->
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
                 <th>
-                    <a th:href="@{/games(sort='title', order=${sort == 'title' and order == 'asc' ? 'desc' : 'asc'})}">
-                        Title
-                        <i th:classappend="${sort == 'title'} ? (order == 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-up')"
+                    <a th:href="@{/franchises(sort='name', order=${sort == 'name' and order == 'asc' ? 'desc' : 'asc'})}">
+                        Name
+                        <i th:classappend="${sort == 'name'} ? (order == 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-up')"
                            class="bi"></i>
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{/games(sort='genre', order=${sort == 'genre' and order == 'asc' ? 'desc' : 'asc'})}">
-                        Genre
-                        <i th:classappend="${sort == 'genre'} ? (order == 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-up')"
+                    <a th:href="@{/franchises(sort='publisher', order=${sort == 'publisher' and order == 'asc' ? 'desc' : 'asc'})}">
+                        Publisher
+                        <i th:classappend="${sort == 'publisher'} ? (order == 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-up')"
                            class="bi"></i>
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{/games(sort='releaseDate', order=${sort == 'releaseDate' and order == 'asc' ? 'desc' : 'asc'})}">
-                        Release Date
-                        <i th:classappend="${sort == 'releaseDate'} ? (order == 'asc' ? 'bi bi-sort-numeric-down' : 'bi bi-sort-numeric-up')"
+                    <a th:href="@{/franchises(sort='revenue', order=${sort == 'revenue' and order == 'asc' ? 'desc' : 'asc'})}">
+                        Revenue
+                        <i th:classappend="${sort == 'revenue'} ? (order == 'asc' ? 'bi bi-sort-numeric-down' : 'bi bi-sort-numeric-up')"
                            class="bi"></i>
                     </a>
                 </th>
                 <th>
-                    <a th:href="@{/games(sort='sales', order=${sort == 'sales' and order == 'asc' ? 'desc' : 'asc'})}">
-                        Sales
-                        <i th:classappend="${sort == 'sales'} ? (order == 'asc' ? 'bi bi-sort-numeric-down' : 'bi bi-sort-numeric-up')"
+                    <a th:href="@{/franchises(sort='lastReleaseDate', order=${sort == 'lastReleaseDate' and order == 'asc' ? 'desc' : 'asc'})}">
+                        Last Release Date
+                        <i th:classappend="${sort == 'lastReleaseDate'} ? (order == 'asc' ? 'bi bi-sort-numeric-down' : 'bi bi-sort-numeric-up')"
                            class="bi"></i>
                     </a>
                 </th>
@@ -59,19 +59,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="game : ${games}">
-                <td th:text="${game.title}">Game Title</td>
-                <td th:text="${game.genre}">Genre</td>
-                <td th:text="${#temporals.format(game.releaseDate, 'dd-MM-yyyy')}">Release Date</td>
-                <td th:text="${game.sales}">Sales</td>
+            <tr th:each="franchise : ${franchises}">
+                <td th:text="${franchise.name}">Franchise Name</td>
+                <td th:text="${franchise.publisher}">Publisher</td>
+                <td th:text="${#numbers.formatCurrency(franchise.revenue)}">Revenue</td>
+                <td th:text="${franchise.lastReleaseDate != null ? #temporals.format(franchise.lastReleaseDate, 'dd-MM-yyyy') : 'N/A'}">
+                    Last Release Date
+                </td>
                 <td>
-                    <a th:href="@{/games/{id}(id=${game.id})}" class="btn btn-sm btn-info">
+                    <a th:href="@{/franchises/{id}(id=${franchise.id})}" class="btn btn-sm btn-info">
                         <i class="bi bi-eye"></i> View
                     </a>
-                    <a th:href="@{/games/edit/{id}(id=${game.id})}" class="btn btn-sm btn-warning">
+                    <a th:href="@{/franchises/edit/{id}(id=${franchise.id})}" class="btn btn-sm btn-warning">
                         <i class="bi bi-pencil"></i> Edit
                     </a>
-                    <form th:action="@{/games/delete/{id}(id=${game.id})}" method="post" class="d-inline">
+                    <form th:action="@{/franchises/delete/{id}(id=${franchise.id})}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
                             <i class="bi bi-trash"></i> Delete
                         </button>
@@ -86,25 +88,24 @@
         <ul class="pagination justify-content-center">
             <!-- Previous button -->
             <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">
-                <a th:href="@{/games(page=${currentPage - 1}, sort=${sort}, order=${order})}"
+                <a th:href="@{/franchises(page=${currentPage - 1}, sort=${sort}, order=${order})}"
                    class="page-link">Previous</a>
             </li>
 
             <!-- Page number buttons -->
             <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}"
                 th:classappend="${pageNum == currentPage} ? 'active'" class="page-item">
-                <a th:href="@{/games(page=${pageNum}, sort=${sort}, order=${order})}" class="page-link"
+                <a th:href="@{/franchises(page=${pageNum}, sort=${sort}, order=${order})}" class="page-link"
                    th:text="${pageNum + 1}"></a>
             </li>
 
             <!-- Next button -->
             <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'" class="page-item">
-                <a th:href="@{/games(page=${currentPage + 1}, sort=${sort}, order=${order})}" class="page-link">Next</a>
+                <a th:href="@{/franchises(page=${currentPage + 1}, sort=${sort}, order=${order})}" class="page-link">Next</a>
             </li>
         </ul>
     </nav>
 
 </div>
-
 </body>
 </html>

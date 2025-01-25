@@ -38,13 +38,11 @@ public class GameFranchise {
     @PositiveOrZero(message = "Revenue must be zero or a positive value.")
     private Float revenue;
 
-    private Integer awards;
-
     @JsonProperty(access = READ_ONLY)
     @Formula("(SELECT MAX(g.release_date) FROM Game g WHERE g.game_franchise_id = id)")
     private LocalDate lastReleaseDate;
 
-    @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Game> games = new ArrayList<>();
 }

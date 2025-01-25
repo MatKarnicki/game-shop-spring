@@ -1,6 +1,8 @@
 package ug.edu.game.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ug.edu.game.rest.domain.Game;
@@ -93,4 +95,7 @@ public class GameFranchiseService {
         return gameFranchiseRepository.findAllFranchisesWithGameCount();
     }
 
+    public Page<GameFranchise> getPaginatedFranchises(Pageable pageable) {
+        return gameFranchiseRepository.findAll(pageable);
+    }
 }

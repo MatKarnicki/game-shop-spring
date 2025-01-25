@@ -118,4 +118,9 @@ public class GameService {
     public Page<Game> getPaginatedGames(Pageable pageable) {
         return gameRepository.findAll(pageable);
     }
+
+    @Transactional(readOnly = true)
+    public List<Game> getAllGamesNotInFranchise(UUID franchiseId) {
+        return gameRepository.findAllGamesNotInFranchise(franchiseId);
+    }
 }

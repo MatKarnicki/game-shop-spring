@@ -87,4 +87,9 @@ public class GameController {
     public List<Game> findAllByGameDetailsFranchise(@RequestParam UUID franchiseId) {
         return gameService.findByFranchise_Id(franchiseId);
     }
+
+    @GetMapping("/games-outside-franchise/{franchiseId}")
+    public List<Game> getAllGamesNotInFranchise(@RequestParam UUID franchiseId) {
+        return gameService.getAllGamesNotInFranchise(franchiseId);
+    }
 }

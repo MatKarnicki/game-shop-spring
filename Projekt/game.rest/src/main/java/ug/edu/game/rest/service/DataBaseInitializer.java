@@ -10,6 +10,7 @@ import ug.edu.game.rest.repository.GameShopRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -133,8 +134,9 @@ public class DataBaseInitializer {
 
 
     private void createOffersForGames(List<Game> games, List<GameShop> gameShops) {
+        Integer shopIndex = 0;
         for (Game game : games) {
-            Integer shopIndex = 0;
+            Collections.shuffle(gameShops);
             for (int i = 0; i < 2; i++) {
                 GameShop shop = gameShops.get(shopIndex % gameShops.size());
                 GameOffer offer = new GameOffer(shop, game, 10 + i * 5, 30.0 + (int) (Math.random() * 20));
