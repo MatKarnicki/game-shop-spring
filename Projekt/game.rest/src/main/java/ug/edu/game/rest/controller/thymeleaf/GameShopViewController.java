@@ -172,4 +172,14 @@ public class GameShopViewController {
         gameOfferService.updateGameOffer(offerId, updatedOffer);
         return "redirect:/shops/" + existingOffer.getGameShop().getId();
     }
+
+    @PostMapping("/offer/{offerId}/remove-game")
+    public String deleteGameOffer(
+            @PathVariable UUID offerId,
+            @ModelAttribute("offer") GameOffer updatedOffer
+    ) {
+        UUID shopId = gameOfferService.getGameOfferById(offerId).getGameShop().getId();
+        gameOfferService.removeGameFromShop(offerId);
+        return "redirect:/shops/" + shopId;
+    }
 }

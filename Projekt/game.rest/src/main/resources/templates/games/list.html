@@ -82,7 +82,7 @@
         </table>
     </div>
 
-    <nav>
+    <nav th:if="${totalPages > 1}">
         <ul class="pagination justify-content-center">
             <!-- Previous button -->
             <li th:classappend="${currentPage == 0} ? 'disabled'" class="page-item">

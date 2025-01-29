@@ -42,7 +42,7 @@ public class GameFranchise {
     @Formula("(SELECT MAX(g.release_date) FROM Game g WHERE g.game_franchise_id = id)")
     private LocalDate lastReleaseDate;
 
-    @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "franchise", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Game> games = new ArrayList<>();
 }
